@@ -19,7 +19,7 @@ class Employee extends Model
          'department_id', 
          'zip_code', 
          'birth_date', 
-         'date_hirde'
+         'date_hired'
     ];
 
     public function country()
