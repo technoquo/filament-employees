@@ -15,12 +15,15 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\CountryResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\CountryResource\RelationManagers;
+use App\Filament\Resources\CountryResource\RelationManagers\EmployeesRelationManager;
+use App\Filament\Resources\CountryResource\RelationManagers\StatesRelationManager;
 
 class CountryResource extends Resource
 {
     protected static ?string $model = Country::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-flag';
+    protected static ?string $navigationGroup = 'System Maganement';
 
     public static function form(Form $form): Form
     {
@@ -28,8 +31,12 @@ class CountryResource extends Resource
             ->schema([
                 Card::make()
                     ->schema([
-                        TextInput::make('country_code'),
+                        TextInput::make('country_code')
+                        ->required()
+                        ->maxLength(3),
                         TextInput::make('name')
+                        ->required()
+                        ->maxLength(255)                      
                     ])
             ]);
     }
@@ -58,7 +65,8 @@ class CountryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+             EmployeesRelationManager::class,
+             StatesRelationManager::class,
         ];
     }
 

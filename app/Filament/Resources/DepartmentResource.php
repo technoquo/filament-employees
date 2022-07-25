@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\CountryResource\RelationManagers\EmployeesRelationManager;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Department;
@@ -21,7 +22,10 @@ class DepartmentResource extends Resource
 {
     protected static ?string $model = Department::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
+    protected static ?string $navigationGroup = 'System Maganement';
+    protected static ?int $navigationSort = 3;
+
 
     public static function form(Form $form): Form
     {
@@ -30,6 +34,8 @@ class DepartmentResource extends Resource
                 Card::make()
                 ->schema([             
                     TextInput::make('name')
+                    ->required()
+                    ->maxLength(255)
                 ])
             ]);
     }
@@ -56,7 +62,7 @@ class DepartmentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            EmployeesRelationManager::class,
         ];
     }
     
